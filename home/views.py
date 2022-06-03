@@ -7,3 +7,5 @@ def home(request):
 
 def detail(request):
     return render(request,'detail.html')
+
+#브랜치 테스트 주석
