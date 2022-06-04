@@ -8,7 +8,7 @@ class Board(models.Model):
                                 verbose_name='작성자')
     title = models.CharField(max_length=64,
                                 verbose_name='제목')
-    content = models.CharField(max_length=64,
+    content = models.TextField(max_length=64,
                                 verbose_name='내용')
     reg_date = models.DateTimeField(auto_now_add=True,
                                         verbose_name='등록일자')
