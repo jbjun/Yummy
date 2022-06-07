@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Member(models.Model):
-    id = models.CharField(max_length=64,
+    member_id = models.CharField(max_length=64,
                                 verbose_name='아이디')
     pw = models.CharField(max_length=64,
                                 verbose_name='비밀번호')

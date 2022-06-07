@@ -1,10 +1,9 @@
 from sqlite3 import register_adapter
-from tkinter import CASCADE
 from django.db import models
 
 # Create your models here.
 class Board(models.Model):
-    writer = models.ForeignKey('member.Member', on_delete=CASCADE,
+    writer = models.ForeignKey('member.Member', on_delete=models.CASCADE,
                                 verbose_name='작성자')
     title = models.CharField(max_length=64,
                                 verbose_name='제목')
