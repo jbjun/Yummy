@@ -4,9 +4,6 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     pass
 
-
-    def __str__(self):
-        return self.id
     
     # 테이블명 지정
     class Meta:
