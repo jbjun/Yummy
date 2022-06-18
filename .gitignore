@@ -1,3 +1,10 @@
 secrets.json
 
 *.pyc
+
+.venv
+
+venv/
+
+venv
+
