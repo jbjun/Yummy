@@ -1,5 +1,4 @@
 from sqlite3 import register_adapter
-from tkinter import CASCADE
 from django.db import models
 
 # Create your models here.
