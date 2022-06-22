@@ -24,5 +24,6 @@ urlpatterns = [
     path('auth/', include("member.urls")),
 
     path('board/list',board.views.list, name='list'),
+    path('board/write',board.views.write, name='write'),
     path('board/detail',board.views.detail, name='detail')
 ]

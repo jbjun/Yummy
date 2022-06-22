@@ -1,5 +1,4 @@
 from sqlite3 import register_adapter
-from tkinter import CASCADE
 from django.db import models
 
 # Create your models here.
@@ -8,14 +7,20 @@ class Board(models.Model):
                                 verbose_name='작성자')
     title = models.CharField(max_length=64,
                                 verbose_name='제목')
-    content = models.TextField(max_length=64,
+    image = models.ImageField(upload_to="images/", null=True, blank=True,
+                                verbose_name='이미지')
+
+    contents = models.TextField(max_length=64,
                                 verbose_name='내용')
     reg_date = models.DateTimeField(auto_now_add=True,
                                         verbose_name='등록일자')
-    update_date = models.DateTimeField(auto_now_add=False,
+    update_date = models.DateTimeField(auto_now_add=True,
                                         verbose_name='수정일자')
-    delete_date = models.DateTimeField(auto_now_add=False,
-                                        verbose_name='삭제일자')
+    # delete_date = models.DateTimeField(auto_now_add=False,
+    #                                     verbose_name='삭제일자')
+
+    board_name = models.CharField(max_length=32, default='TEST'
+                                  , verbose_name='게시판 종류')
 
 
     def __str__(self):
