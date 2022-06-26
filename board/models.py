@@ -1,10 +1,10 @@
 from sqlite3 import register_adapter
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
 class Board(models.Model):
-    writer = models.OneToOneField('member.User', on_delete=models.CASCADE,primary_key=True,
-                                verbose_name='작성자')
+    writer = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, verbose_name='작성자')
     title = models.CharField(max_length=64,
                                 verbose_name='제목')
     image = models.ImageField(upload_to="images/", null=True, blank=True,
@@ -12,6 +12,9 @@ class Board(models.Model):
 
     contents = models.TextField(max_length=64,
                                 verbose_name='내용')
+
+    hits = models.PositiveIntegerField(verbose_name='조회수', default=0)
+
     reg_date = models.DateTimeField(auto_now_add=True,
                                         verbose_name='등록일자')
     update_date = models.DateTimeField(auto_now_add=True,

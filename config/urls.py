@@ -21,7 +21,12 @@ import board.views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home.views.home, name='home'),
+
+    path('auth/', include("member.urls")),
+
+    path('board/', include('board.urls'), name='board'),
+
     path('accounts/', include('allauth.urls')),
-    path('board/list',board.views.list, name='list'),
-    path('board/detail',board.views.detail, name='detail')
+
+
 ]
