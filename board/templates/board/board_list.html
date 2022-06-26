@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="album py-5 bg-light">
+        <div class="container">
+          <form action="" method="GET">
+              <div class="col-lg-4">
+               <!-- Search widget-->
+                  <div class="card mb-4">
+                      <div class="card-header">Search</div>
+                      <div class="col" style="margin-top: 10px;">
+                            <select style="width: 6em;" class="custom-select custom-select-md" name="type">
+                                <option value="all">전체</option>
+                                <option value="title_content">제목+내용</option>
+                                <option value="title">제목</option>
+                                <option value="contents">내용</option>
+                                <option value="writer">작성자</option>
+                            </select>
+                        </div>
+                      <div class="card-body">
+                          <div class="input-group">
+                              <input class="form-control" type="text" name='q' value="{{ q }}" placeholder="검색어를 입력해주세요." aria-label="Enter search term..." aria-describedby="button-search" />
+                              <button class="btn btn-primary" id="search_btn" type="submit">검색</button>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </form>
+          <div class="col-lg-4">
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+              <a href="">글쓰기</a>
+            </button>
+          </div>
+
+            {% if q %}
+            <h5>'{{ q }}' 검색 결과입니다.</h5>
+            {% endif %}
+
+          <div class="row">
+            {% if board_list %}
+            {% for board in board_list %}
+            <div class="col-md-4">
+              <div class="card mb-4 box-shadow">
+                <img class="card-img-top" data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail" alt="Thumbnail [100%x225]" style="height: 225px; width: 100%; display: block;" src="data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22288%22%20height%3D%22225%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20288%20225%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_18175f64434%20text%20%7B%20fill%3A%23eceeef%3Bfont-weight%3Abold%3Bfont-family%3AArial%2C%20Helvetica%2C%20Open%20Sans%2C%20sans-serif%2C%20monospace%3Bfont-size%3A14pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_18175f64434%22%3E%3Crect%20width%3D%22288%22%20height%3D%22225%22%20fill%3D%22%2355595c%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%2296.82500076293945%22%20y%3D%22118.74000034332275%22%3EThumbnail%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E" data-holder-rendered="true">
+                <div class="card-body">
+                  <p class="card-text">{{ board.contents }}</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">
+                          <a href="/board/{{ board.id }}/">View</a>
+                      </button>
+                    </div>
+                    <small class="text-muted">{{ board.reg_date|date:'Y. m. d' }}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+            {% else %}
+                {% if q %}          <!-- 검색어가 있어 q가 context로 넘어오면 검색결과가 없음 -->
+                    <tr class="text-center">
+                        <td colspan="5">
+                            일치하는 검색 결과가 없습니다.
+                        </td>
+                    </tr>
+                    {% else %}          <!-- q가 없으면 검색어가 아니며 게시글이 존재하지 않으므로 게시글 미작성 -->
+                    <tr class="text-center">
+                        <td colspan="5">
+                            작성된 게시글이 없습니다.
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endif %}
+
+          </div>
+          <!-- Pagination-->
+          <nav aria-label="Pagination">
+              <hr class="my-0" />
+              {% if is_paginated %}
+              <ul class="pagination justify-content-center my-4">
+                  {% if page_obj.has_previous %}
+                  <li class="page-item">
+                      <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">이전</a>
+                  </li>
+                  {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">이전</a>
+                  </li>
+                  {% endif %}
+
+                  {% for page in page_range %}
+                  <li class="page-item {% if page == page_obj.number %} activate {% endif %}">
+                     <a class="page-link" href="?type={{ type }}&q={{ q }}&page={{ page }}">{{ page }}</a>
+                  </li>
+                  {% endfor %}
+
+                  {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link"
+                            href="?type={{ type }}&q={{ q }}&page={{ page_obj.next_page_number }}">다음</a>
+                    </li>
+                  {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">다음</a>
+                    </li>
+                  {% endif %}
+              </ul>
+              {% endif %}
+          </nav>
+        </div>
+      </div>
+{% endblock %}
