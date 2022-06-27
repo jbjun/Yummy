@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'allauth.socialaccount.providers.naver',
     'allauth.socialaccount.providers.kakao',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
@@ -152,3 +153,6 @@ AUTH_USER_MODEL = 'member.User'
 SITE_ID=1
 
 LOGIN_REDIRECT_URL = '/'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')

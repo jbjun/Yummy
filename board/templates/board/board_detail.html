@@ -12,8 +12,8 @@
                                 <div class="card-body">
                                     <div class="small text-muted">{{ board.registered_date|date:'Y.m.d. H:i' }}</div>
                                     <h2 class="card-title">{{ board.title }}</h2>
-                                    <p class="card-text">{{ board.contents }}</p>
-                                    <p class="card-text">{{ board.contents }}</p>
+                                    <p class="card-text">{{ board.contents | safe }}</p>
+                                    <p class="card-text">{{ board.hits }}</p>
                                 </div>
                             </div>
                         </div>
