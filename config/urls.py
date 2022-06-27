@@ -16,10 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import home.views
+import board.views
+import chat.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',home.views.home, name='home'),
-    path('detail',home.views.detail,name='detail'),
-    path('auth/', include("member.urls"))
+    path('auth/', include("member.urls")),
+
+    path('board/list',board.views.list, name='list'),
+    path('board/detail',board.views.detail, name='detail'),
+
+    path('chat/chatt',chat.views.chatt, name='chatt'),
+    path('chat/chatt/<str:room_name>/', chat.views.room, name='room'),
 ]

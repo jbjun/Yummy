@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+        <!-- Page content-->
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    <div class="container">
+                        <div class="row">
+                            <!-- Featured blog post-->
+                            <div class="card mb-4">
+                                <a href="#!"><img class="card-img-top" src="https://dummyimage.com/850x350/dee2e6/6c757d.jpg" alt="..." /></a>
+                                <div class="card-body">
+                                    <div class="small text-muted">January 1, 2022</div>
+                                    <h2 class="card-title">Featured Post Title</h2>
+                                    <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+                                    <a class="btn btn-primary" href="#!">Read more →</a>
+                                </div>
+                            </div>
+                            <div class="card-header bg-light">
+                                    <i class="fa fa-comment fa"></i> 댓글
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                    <div class="form-inline mb-2">
+                                        <label for="replyId"><i class="fa fa-user-circle-o fa-2x"></i></label>
+                                        <input type="text" class="form-control ml-2" placeholder="Enter yourId" id="replyId">
+                                        <label for="replyPassword" class="ml-4"><i class="fa fa-unlock-alt fa-2x"></i></label>
+                                        <input type="password" class="form-control ml-2" placeholder="Enter password" id="replyPassword">
+                                    </div>
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                                    <button type="button" class="btn btn-dark mt-3" onClick="javascript:addReply();">post reply</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+{% endblock %}
