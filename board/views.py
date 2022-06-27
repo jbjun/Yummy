@@ -5,6 +5,7 @@ from django.views.generic import ListView
 from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
+from member.models import User
 
 class BoardListView(ListView):
     model = Board
@@ -21,11 +22,11 @@ class BoardListView(ListView):
             if len(search_keyword) > 1:
                 if search_type == 'all':
                     search_board_list = board_list.filter(
-                        Q(title__icontains=search_keyword) | Q(content__icontains=search_keyword) | Q(
+                        Q(title__icontains=search_keyword) | Q(contents__icontains=search_keyword) | Q(
                             writer__user_id__icontains=search_keyword))
                 elif search_type == 'title_content':
                     search_board_list = board_list.filter(
-                        Q(title__icontains=search_keyword) | Q(content__icontains=search_keyword))
+                        Q(title__icontains=search_keyword) | Q(contents__icontains=search_keyword))
                 elif search_type == 'title':
                     search_board_list = board_list.filter(title__icontains=search_keyword)
                 elif search_type == 'contents':
@@ -65,46 +66,19 @@ class BoardListView(ListView):
 
         return context
 
-
-
-def write(request):
-    login_session = request.session.get('login_session', '')
-    context = {'login_session': login_session}
-
-    if request.method == 'GET':
-        write_from = BoardWriteForm()
-        context['forms'] = write_from
-        return render(request, 'write.html', context)
-
-    elif request.method == 'POST':
-        write_form = BoardWriteForm(request.POST)
-
-        if write_form.is_valid():
-            # writer = User.objects.get(user_id=login_session)
-            board = Board(
-                title=write_form.title,
-                contents=write_form.contents,
-                # writer=writer,
-                board_name=write_form.board_name
-            )
-            board.save()
-            return redirect('/board/list')
-        else:
-            context['forms'] = write_form
-            if write_form.errors:
-                for value in write_form.errors.values():
-                    context['error'] = value
-                return render(request, 'board/write.html', context)
-
 def board_detail_view(request, pk):
     board = get_object_or_404(Board, pk=pk)
-    # session_cookie = request.session['writer']
-    # cookie_name = F'notice_hits:{session_cookie}'
+    session_cookie = request.session.get('username')
+    cookie_name = F'board_hits:{session_cookie}'
     context = {
         'board': board
     }
-    # response = render(request, 'notice/notice_detail.html', context)
-    #
+    response = render(request, 'board/board_detail.html', context)
+
+    board.hits += 1
+    board.save()
+    return response
+
     # if request.COOKIES.get(cookie_name) is not None:
     #     cookies = request.COOKIES.get(cookie_name)
     #     cookies_list = cookies.split('|')
@@ -120,3 +94,20 @@ def board_detail_view(request, pk):
     #     return response
 
     return render(request,'board/board_detail.html', context)
+
+
+def board_write_view(request):
+    if request.method == "POST":
+        form = BoardWriteForm(request.POST)
+        user = request.session.get('username')
+        user_id = User.objects.get(username = 'admin3')
+
+        if form.is_valid():
+            board = form.save(commit = False)
+            board.writer = user_id
+            board.save()
+            return redirect('board:board_list')
+    else:
+        form = BoardWriteForm()
+
+    return render(request, "board/board_write.html", {'form': form})
