@@ -45,6 +45,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'channels', #맨위에 두어야 충돌하지 않음
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
     'board',
     'member',
     'reply',
+    'chat',
 ]
 
 MIDDLEWARE = [
@@ -141,3 +143,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 AUTH_USER_MODEL = 'member.User'
+
+ASGI_APPLICATION = 'config.asgi.application'
