@@ -28,5 +28,5 @@ urlpatterns = [
     path('board/detail',board.views.detail, name='detail'),
 
     path('chat/chatt',chat.views.chatt, name='chatt'),
-    path('chat/chatt/<str:room_name>/', chat.views.room, name='room'),
+    path('chat/room', chat.views.room, name='room'),
 ]
