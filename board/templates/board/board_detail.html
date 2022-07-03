@@ -106,7 +106,7 @@
     $(document).ready(function () {
         $('#reply_write').click(function () {
             console.log('버튼눌림');
-            var contents= $("#content_id").val();
+            var contents= $("#reply_id").val();
             var writer= $("#reply_writer").val();
             $.ajax({
                 type: "POST",
@@ -135,11 +135,11 @@
                             '</div><div style="text-align:right;"><a onclick="commentDelete('+response.reply_id+');">댓글삭제</a></div></div><hr></div><div class='+response.reply_id+'></div>'
                         );
                     }
-                    $('#content_id').val("");
+                    $('#reply_id').val("");
                 },
                 error: function (request,status,error) {
                     console.log("실패");
-                    if ($('#content_id').val()=="") {
+                    if ($('#reply_id').val()=="") {
                         alert('댓글을 입력해주세요.');
                     }
                 },

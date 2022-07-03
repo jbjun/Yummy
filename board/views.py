@@ -1,5 +1,6 @@
 import json
 
+from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -94,20 +95,6 @@ def board_detail_view(request, pk):
     board.save()
     return response
 
-    # if request.COOKIES.get(cookie_name) is not None:
-    #     cookies = request.COOKIES.get(cookie_name)
-    #     cookies_list = cookies.split('|')
-    #     if str(pk) not in cookies_list:
-    #         response.set_cookie(cookie_name, cookies + f'|{pk}', expires=None)
-    #         board.hits += 1
-    #         board.save()
-    #         return response
-    # else:
-    #     response.set_cookie(cookie_name, pk, expires=None)
-    #     board.hits += 1
-    #     board.save()
-    #     return response
-
     return render(request,'board/board_detail.html', context)
 
 
@@ -166,6 +153,7 @@ def reply_write_view(request, pk):
     post = get_object_or_404(Board, id=pk)
     writer = request.POST.get('writer')
     contents = request.POST.get('contents')
+
     if contents:
         reply = Reply.objects.create(post=post, contents=contents, writer=request.user)
         post.save()
