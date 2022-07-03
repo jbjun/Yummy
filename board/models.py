@@ -34,3 +34,20 @@ class Board(models.Model):
         db_table = 'yummy_board'
         verbose_name = '리뷰 게시판'
         verbose_name_plural = '리뷰 게시판'
+
+
+class Reply(models.Model):
+    post = models.ForeignKey(Board, on_delete=models.CASCADE, verbose_name='게시글')
+    writer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, verbose_name='댓글작성자')
+    contents = models.TextField(verbose_name='댓글내용')
+    created = models.DateTimeField(auto_now_add=True, verbose_name='작성일')
+    deleted = models.BooleanField(default=False, verbose_name='삭제여부')
+
+    def __str__(self):
+        return self.writer
+
+    # 테이블명 지정
+    class Meta:
+        db_table = 'yummy_board_reply'
+        verbose_name = '리뷰 게시판_댓글'
+        verbose_name_plural = '리뷰 게시판_댓글'
